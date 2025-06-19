@@ -1,13 +1,24 @@
 function _init()
+    -- 5 lanes
+    --valid_pos = {8, 32, 56, 80, 104}
+
+    -- 3 lanes
+    valid_pos = {32, 56, 80}
+
+    -- 3 lanes
+    --valid_pos = {8, 32, 56}
+    current_pos = 2
+
     o_spawn_timer = 0
-    o_spawn_rate = 10
+    o_spawn_rate = 20
+    o_speed = 5
 
     rnd_timer = 0
     rnd_reset = 60
 
     p={
-        x= 50,
-        y=110
+        current_pos = 3,
+        y = 110,
     }
 
     i_opponents()
@@ -15,11 +26,17 @@ end
 
 function _update()
     
-    if (btn(0)) p.x -= 25
-    if (p.x <= 10) p.x=10
+    
+    if btnp(0) then
+        p.current_pos -= 1
+    end
+    if (p.current_pos < 1) p.current_pos = 1
 
-    if (btn(1)) p.x += 25
-    if (p.x >= 110) p.x=110
+
+    if btnp(1) then
+        p.current_pos += 1
+    end
+    if (p.current_pos > count(valid_pos)) p.current_pos = count(valid_pos)
 
     o_spawn_timer += 1
     if o_spawn_timer == o_spawn_rate then
@@ -35,7 +52,6 @@ function _update()
 
     --     rnd_timer = 0
     -- end
-    
 
     u_opponents()
 end
@@ -45,10 +61,10 @@ function _draw()
     map(0,0,0,0,16,16)
     --spr(0, p.x, p.y, 2, 2)
 
-    spr(0, 128/2-16, p.y, 2, 2)
-
-
+    
+    
     d_opponents()
 
-    print(text, 50, 50)
+    spr(0, valid_pos[p.current_pos], p.y, 2, 2)
+    --spr(10, valid_pos[p.current_pos], 90, 4, 4)
 end

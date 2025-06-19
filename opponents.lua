@@ -1,5 +1,4 @@
 function i_opponents()
-    valid_pos = {8,24,48,72,96}
     opponents = {}
 end
 
@@ -28,7 +27,7 @@ function add_opponent()
     o = {
         x = valid_pos[rnd_pos],
         y = -20,
-        speed = 1,
+        speed = o_speed,
         col= cols[choice]    }
     add(opponents, o)
 end
