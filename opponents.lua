@@ -8,13 +8,25 @@ function u_opponents()
 
         if o.y > 128 then
             del(opponents,o)
+            p.score += 100
         end
+
     end
+    
 end
 
 function d_opponents()
     for o in all(opponents) do
+        o.box = {
+            top = o.y,
+            right = o.x+o.width-1,
+            bottom = o.y+o.height-1,
+            left = o.x
+        }
         spr(o.col, o.x, o.y, 2, 2)
+        if debug then
+            rect(o.box.left, o.box.top, o.box.right, o.box.bottom, o_rect_color)
+        end
     end
 end
 
@@ -27,7 +39,16 @@ function add_opponent()
     o = {
         x = valid_pos[rnd_pos],
         y = -20,
+
+        width = 16,
+        height = 16,
+
         speed = o_speed,
-        col= cols[choice]    }
+        col= cols[choice],
+
+        o_rect_color = 3,
+    }
+    
     add(opponents, o)
+    
 end
